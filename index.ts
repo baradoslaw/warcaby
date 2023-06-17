@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import 'express-async-errors';
+
 import {handleError} from "./utils/error";
+import './utils/db';
 
 const app = express();
 app.use(cors({
