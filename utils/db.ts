@@ -4,6 +4,7 @@ export const pool = createPool({
   host: 'localhost',
   user: 'root',
   password: '',
+  database: 'warcaby',
   namedPlaceholders: true,
   decimalNumbers: true,
 });
