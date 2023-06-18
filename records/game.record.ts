@@ -45,6 +45,7 @@ export class GameRecord implements GameEntity {
 
   async updateGameState(): Promise<void> {
     this.currentMove = this.currentMove === 1 ? 2 : 1;
+    //@TODO nie zmienia ruchu
 
     await pool.execute("UPDATE `game_sessions` SET `gameBoard` = :gameBoard, `currentMove` = :currentMove WHERE `sessionId` = :sessionId", {
       gameBoard: this.gameBoard,
