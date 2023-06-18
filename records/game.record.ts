@@ -22,7 +22,7 @@ export class GameRecord implements GameEntity {
     this.currentMove = obj.currentMove;
   }
 
-  async insertNewGame(): Promise<GameEntity> {
+  async insertNewGame(): Promise<void> {
       this.sessionId = uuid();
       this.player1 = uuid();
       this.player2 = uuid();
@@ -41,7 +41,15 @@ export class GameRecord implements GameEntity {
       this.currentMove = 1;
 
       await pool.execute("INSERT INTO `game_sessions`(`sessionId`, `player1`, `player1Nick`, `player2`, `player2Nick`, `gameBoard`, `currentMove`) VALUES (:sessionId, :player1, :player1Nick, :player2, :player2Nick, :gameBoard, :currentMove)", this);
+  }
 
-      return this;
+  async updateGameState(): Promise<void> {
+    this.currentMove = this.currentMove === 1 ? 2 : 1;
+
+    await pool.execute("UPDATE `game_sessions` SET `gameBoard` = :gameBoard, `currentMove` = :currentMove WHERE `sessionId` = :sessionId", {
+      gameBoard: this.gameBoard,
+      currentMove: this.currentMove,
+      sessionId: this.sessionId,
+    });
   }
 }

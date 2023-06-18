@@ -6,4 +6,11 @@ export const gameRouter = Router()
     const game = new GameRecord(req.body);
     await game.insertNewGame();
     res.json(game);
+  })
+
+  .post('/update-game-state', async (req, res) => {
+    const game = new GameRecord(req.body);
+    //@TODO Walidacja ruchu
+    await game.updateGameState();
+    res.json(game);
   });
